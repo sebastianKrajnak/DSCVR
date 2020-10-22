@@ -64,9 +64,8 @@ export default function App() {
         <Pressable style={callActive == false ? styles.callButtonGreen : styles.callButtonRed} onPress={toggleCall}>
           <Image source={image} style={styles.image}/>
         </Pressable>
-        {showBackspace()}
       </View>
-
+      {showBackspace()}
       <StatusBar style="auto" />
     </View>
   );
