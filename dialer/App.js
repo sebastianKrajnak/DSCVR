@@ -3,20 +3,42 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Pressable, Image} from 'react-native';
 
 
-
 export default function App() {
 
   const [phoneNumber, setPhoneNumber] = useState("");
-  
+  const [callActive, setCall] = useState(false);
+
+  const toggleCall = function() {
+    setCall(!callActive)
+  };
+
+  const showBackspace = function() {
+    if (phoneNumber.length > 0) {
+      return(  
+        <Pressable onPress={() => { setPhoneNumber(phoneNumber.slice(0, -1))}}>
+          <Image source={backspace} style={styles.image}/>
+        </Pressable>
+      );
+    }
+    else
+      return null;
+  };
+
+  let backspace=require("./assets/backspace.png")
   let rows=[]
   let nums=[[1,2,3], [4,5,6], [7,8,9], ['*',0,'#']]
-  let phoneIcon=require("./assets/phone.png")
+  let chars=[['O_O','ABC','DEF'], ['GHI','JKL','MNO'], ['PQRS','TUV','WXYZ'], ['','+','']]
+  
+  var image = callActive
+    ? require("./assets/phoneEnd.png")
+    : require("./assets/phone.png");
 
   for(let i=0;i<4;i++){
     let row=[]
     for(let j=0;j<3;j++){
       row.push(<TouchableOpacity key={`button-${i}-${j}`} style={styles.button} onPress={() => { setPhoneNumber(phoneNumber + nums[i][j])}}>
         <Text style={styles.buttonText}>{nums[i][j]}</Text>
+        <Text style={styles.buttonTextSmaller}>{chars[i][j]}</Text>
       </TouchableOpacity>)
     }
     rows.push(<View style={styles.row}>{row}</View>)
@@ -38,11 +60,11 @@ export default function App() {
           </View>
       </View>
 
-      <View style={styles.callButtonBar}>
-        <Pressable style={styles.callButton}>
-          <Image source={phoneIcon} style={styles.image}/>
-          
+      <View style={styles.bottomBar}>
+        <Pressable style={callActive == false ? styles.callButtonGreen : styles.callButtonRed} onPress={toggleCall}>
+          <Image source={image} style={styles.image}/>
         </Pressable>
+        {showBackspace()}
       </View>
 
       <StatusBar style="auto" />
@@ -80,12 +102,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
 
-  callButtonBar:{
+  bottomBar:{
     flex: 1,
     backgroundColor: 'white',
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginLeft: '27%'
   },
 
   row:{
@@ -120,6 +143,11 @@ const styles = StyleSheet.create({
     fontSize: 30
   },
 
+  buttonTextSmaller:{
+    fontSize: 10,
+    color: 'gray'
+  },
+
   image: {
     flex: 1,
     width: 30,
@@ -127,10 +155,21 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
 },
 
-  callButton:{
+  callButtonGreen:{
     width: 100,
     height: '80%',
     backgroundColor: 'limegreen',
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    alignItems: 'center'
+  },
+
+  callButtonRed:{
+    width: 100,
+    height: '80%',
+    backgroundColor: 'red',
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
     borderTopRightRadius: 20,
