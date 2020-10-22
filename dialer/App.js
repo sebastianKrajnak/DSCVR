@@ -15,7 +15,7 @@ export default function App() {
   const showBackspace = function() {
     if (phoneNumber.length > 0) {
       return(  
-        <Pressable onPress={() => { setPhoneNumber(phoneNumber.slice(0, -1))}}>
+        <Pressable onPress={() => { setPhoneNumber(phoneNumber.slice(0, -1))}, }>
           <Image source={backspace} style={styles.image}/>
         </Pressable>
       );
@@ -64,8 +64,9 @@ export default function App() {
         <Pressable style={callActive == false ? styles.callButtonGreen : styles.callButtonRed} onPress={toggleCall}>
           <Image source={image} style={styles.image}/>
         </Pressable>
+        {showBackspace()}
       </View>
-      {showBackspace()}
+
       <StatusBar style="auto" />
     </View>
   );
