@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Pressable, Image} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Pressable, Image, Linking} from 'react-native';
 
 
 export default function App() {
@@ -10,18 +10,25 @@ export default function App() {
 
   const toggleCall = function() {
     setCall(!callActive)
+    if(!callActive)
+      Linking.openURL(`tel:${phoneNumber}`)
   };
 
   const showBackspace = function() {
     if (phoneNumber.length > 0) {
       return(  
-        <Pressable onPress={() => { setPhoneNumber(phoneNumber.slice(0, -1))}, }>
+        <Pressable onPress={() => { setPhoneNumber(phoneNumber.slice(0, -1))}} onLongPress={() => { setPhoneNumber("")}}>
           <Image source={backspace} style={styles.image}/>
         </Pressable>
       );
     }
     else
       return null;
+  };
+
+  const setPlus = function(i,j) {
+    if(nums[i][j]==0)
+      setPhoneNumber(phoneNumber + '+')
   };
 
   let backspace=require("./assets/backspace.png")
@@ -36,7 +43,7 @@ export default function App() {
   for(let i=0;i<4;i++){
     let row=[]
     for(let j=0;j<3;j++){
-      row.push(<TouchableOpacity key={`button-${i}-${j}`} style={styles.button} onPress={() => { setPhoneNumber(phoneNumber + nums[i][j])}}>
+      row.push(<TouchableOpacity key={`button-${i}-${j}`} style={styles.button} onPress={ () => { setPhoneNumber(phoneNumber + nums[i][j])}}>
         <Text style={styles.buttonText}>{nums[i][j]}</Text>
         <Text style={styles.buttonTextSmaller}>{chars[i][j]}</Text>
       </TouchableOpacity>)
