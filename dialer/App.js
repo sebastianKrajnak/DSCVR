@@ -16,7 +16,7 @@ export default function App() {
 
   const showBackspace = function() {
     if (phoneNumber.length > 0) {
-      return(  
+      return(
         <Pressable onPress={() => { setPhoneNumber(phoneNumber.slice(0, -1))}} onLongPress={() => { setPhoneNumber("")}}>
           <Image source={backspace} style={styles.image}/>
         </Pressable>
@@ -26,16 +26,11 @@ export default function App() {
       return null;
   };
 
-  const setPlus = function(i,j) {
-    if(nums[i][j]==0)
-      setPhoneNumber(phoneNumber + '+')
-  };
-
   let backspace=require("./assets/backspace.png")
   let rows=[]
   let nums=[[1,2,3], [4,5,6], [7,8,9], ['*',0,'#']]
   let chars=[['O_O','ABC','DEF'], ['GHI','JKL','MNO'], ['PQRS','TUV','WXYZ'], ['','+','']]
-  
+
   var image = callActive
     ? require("./assets/phoneEnd.png")
     : require("./assets/phone.png");
@@ -43,7 +38,7 @@ export default function App() {
   for(let i=0;i<4;i++){
     let row=[]
     for(let j=0;j<3;j++){
-      row.push(<TouchableOpacity key={`button-${i}-${j}`} style={styles.button} onPress={ () => { setPhoneNumber(phoneNumber + nums[i][j])}}>
+      row.push(<TouchableOpacity key={`button-${i}-${j}`} style={styles.button} onPress={ () => { setPhoneNumber(phoneNumber + nums[i][j])} } onLongPress={ () => { nums[i][j]==0 ? setPhoneNumber(phoneNumber + '+') : null} }>
         <Text style={styles.buttonText}>{nums[i][j]}</Text>
         <Text style={styles.buttonTextSmaller}>{chars[i][j]}</Text>
       </TouchableOpacity>)
@@ -170,7 +165,8 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    alignItems: 'center'
+    alignItems: 'center',
+    alignSelf: 'center'
   },
 
   callButtonRed:{
@@ -181,7 +177,8 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    alignItems: 'center'
+    alignItems: 'center',
+    alignSelf: 'center'
   },
 
 });
