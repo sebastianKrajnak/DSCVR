@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Pressable, Image, Linking, Alert} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Pressable, Image, Linking} from 'react-native';
 
 
 export default function App() {
@@ -9,15 +9,9 @@ export default function App() {
   const [callActive, setCall] = useState(false);
 
   const toggleCall = function() {
-    
-    if(phoneNumber.length>0 && !callActive){
+    setCall(!callActive)
+    if(!callActive)
       Linking.openURL(`tel:${phoneNumber}`)
-      setCall(!callActive)
-      }
-    else if(phoneNumber.length>0 && callActive)
-      setCall(!callActive)
-    else 
-      Alert.alert('Write a number..')
   };
 
   const showBackspace = function() {
@@ -69,7 +63,7 @@ export default function App() {
       </View>
 
       <View style={styles.bottomBar}>
-        <Pressable style={callActive == true ? styles.callButtonRed : styles.callButtonGreen} onPress={toggleCall}>
+        <Pressable style={callActive == false ? styles.callButtonGreen : styles.callButtonRed} onPress={toggleCall}>
           <Image source={image} style={styles.image}/>
         </Pressable>
         {showBackspace()}
