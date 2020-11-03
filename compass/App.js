@@ -45,9 +45,9 @@ export default function App() {
 
   function compassHeading( x, y, z ) {
 
-    var _x = y  ? y  * degtorad : 0; // beta value
-    var _y = z ? z * degtorad : 0; // gamma value
-    var _z = x ? x * degtorad : 0; // alpha value
+    var _x = y  ? y  * degtorad : 0;
+    var _y = z ? z * degtorad : 0; 
+    var _z = x ? x * degtorad : 0; 
 
     var cX = Math.cos( _x );
     var cY = Math.cos( _y );
@@ -83,7 +83,7 @@ export default function App() {
       </View>
       <View style={{flex: 3, marginTop: 80}}>
         <Image
-          style={{ width: 300, height: 300, transform: [{ rotate: angle + "deg"}] }}
+          style={{ width: 300, height: 300, transform: [{ rotate: "-" + angle + "deg"}] }}
           source={require("./assets/compass.png")}
         />
       </View>
