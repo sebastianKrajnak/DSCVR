@@ -1,208 +1,99 @@
-/* import React, {Component} from 'react';
-import { StyleSheet, View, PermissionsAndroid, Alert} from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
-import Geolocation from '@react-native-community/geolocation';
+import 'react-native-gesture-handler';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import React, { useState } from 'react';
+import { View, PermissionsAndroid, TouchableOpacity, Text, Image} from 'react-native';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import styles from "./Styles"
 
-export default class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-        userLocation:{
-          latitude: 48.71395,
-          longitude: 21.25808,
-          latitudeDelta: 0.003,
-          longitudeDelta: 0.003,
-        },
-    };
-}
+//import Geolocation from '@react-native-community/geolocation';
 
-  componentDidMount(){
-    this.requestLocationPermission();
-    
-  }
-
-  requestLocationPermission = async () => {
-    try{
-      const response = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
-        title: "Location Permission",
-        message: "DSCVR needs access to your location " + "so it can function properly.",
-        buttonNeutral: "Ask Me Later",
-        buttonNegative: "Cancel",
-        buttonPositive: "OK"
-        }
-      )
-      if(response === PermissionsAndroid.RESULTS.GRANTED){
-        console.log("Location permission granted")
-        Geolocation.getCurrentPosition(info => console.log(info));
-      }
-      else{
-        console.log("Location permission denied")
-      }
-    }catch(err){
-      console.warn(err);
-    }
-  }
-
-  locateCurrentPosition = () =>{
-    Geolocation.getCurrentPosition(
-      position => {
-        this.setState({
-          userLocation:{
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-            latitudeDelta: 0.003,
-            longitudeDelta: 0.003,
-          },
-        })
-      }, error => console.log(error),
-        {enableHighAccuracy: true, timeout: 10000, maximumAge: 1000}
-    );
-  } 
-
-  handleCenter = () => {
-    let location = this.state.pos;
-    this.map.animateToRegion({
-      latitude: pos.latitude,
-      longitude: pos.longitude,
-      latitudeDelta: 0.003,
-      longitudeDelta: 0.003,
-    })
-  }
- 
-  render(){
-    return (
-      <View style={styles.container}>
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          ref={map => this.map = map}
-          style={styles.map}
-          showsUserLocation={true}
-          followsUserLocation={true}
-          animateToRegion={this.locateCurrentPosition}
-          region={this.state.userLocation}/>
-      </View>
-    );
-  }
-};
-
-const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-    height: "100%",
-  },
-
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  }
-}); 
+/* 
+import Entry from './Entry';
+import useWatchLocation from "./hooks/useWatchLocation";
+import { geolocationOptions } from "./constants/geolocationOptions";
+import Location from "./components/Location";
  */
 
+ const HomeScreen = ({navigation}) => {
+  const [data, setData] = useState([]);
 
-import React, {Component} from 'react';
-import { StyleSheet, View, Alert, PermissionsAndroid} from 'react-native';
-import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import Geolocation from '@react-native-community/geolocation';
+   return(
+    <View style={styles.container}>
+      <MapView provider={PROVIDER_GOOGLE} style={styles.map} showsUserLocation={true} showsBuildings={false} showsPointsOfInterest={false} showsTraffic={false}
+        region={{
+          latitude:48.717776,
+          longitude: 21.259287,
+          latitudeDelta: 0.0009,
+          longitudeDelta: 0.0010
+        }}
+      >
+        
+      </MapView>
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    //this is just for test 2
-    //maybe add this
-  
-    this.state = {
-        inititalPosition: {
-          latitude: 0,
-          longitude: 0,
-          latitudeDelta: 0.009,
-          longitudeDelta: 0.009,
-        },
-        markerPosition: {
-          latitude: 0,
-          longitude:0
-        }
-    };
-  }
-
-  componentDidMount(){
-       Geolocation.getCurrentPosition((position) => {
-
-        var inititalRegion = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          latitudeDelta: 0.009,
-          longitudeDelta: 0.009
-        }
-
-        this.setState({inititalPosition: inititalRegion})
-        this.setState({markerPosition: inititalRegion})
-
-      }, 
-        (error) => alert(JSON.stringify(error)),{enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-      )
-
-    this.watchID = Geolocation.watchPosition((position) => {
-
-      var lastRegion = {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-        latitudeDelta: 0.009,
-        longitudeDelta: 0.009
-      }
-
-      this.setState({inititalPosition: lastRegion})
-      this.setState({markerPosition: lastRegion})
-
-    })
-  }
-
-  componentWillUnmount(){
-    Geolocation.clearWatch(this.watchID)
-  }
-
-  requestLocationPermission = async () => {
-    try{
-      const response = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
-        title: "Location Permission",
-        message: "DSCVR needs access to your location " + "so it can function properly.",
-        buttonNeutral: "Ask Me Later",
-        buttonNegative: "Cancel",
-        buttonPositive: "OK"
-        }
-      )
-      if(response === PermissionsAndroid.RESULTS.GRANTED){
-        console.log("Location permission granted")
-      }
-      else{
-        console.log("Location permission denied")
-      }
-    }catch(err){
-      console.warn(err);
-    }
-  }
-
-  render(){
-    return (
-      <View style={styles.container}>
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          style={styles.map}
-          showsUserLocation={true}
-          region={this.state.inititalPosition}>
-            <Marker coordinate={this.state.markerPosition}/>
-        </MapView>
-          
+      <View style={styles.buttonRow}>
+        <TouchableOpacity style={styles.searchBar}>
+          <Text style={{fontSize: 20, color: 'white', fontFamily: 'Roboto'}}>Search...</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonNewEntry} onPress={() => navigation.navigate('New Entry')}>
+          <Text style={{fontSize: 40, color: 'white', fontFamily: 'Roboto'}}>+</Text>
+        </TouchableOpacity>
       </View>
-    );
+
+      <View style={{position: 'absolute', marginTop: '125%', marginLeft: '83.5%'}}>
+        <TouchableOpacity style={styles.buttonLocation}>
+          <Image source={require('./assets/position.png')} style={{width: 30, height: 30}}/>
+        </TouchableOpacity>
+      </View>
+    
+      <View style={{position: 'absolute',marginTop: '5%', marginLeft: '5%'}}>
+        <TouchableOpacity style={styles.buttonMenu}>
+          <Image source={require('./assets/menu.jpg')} style={{width: 25, height: 25}}/>
+        </TouchableOpacity>
+      </View>
+    </View>
+   );
+ }
+
+ function NewEntryScreen(){
+   return(
+     <View>
+      <Text>Hello</Text>
+     </View>
+   );
+ }
+
+const Stack = createStackNavigator();
+
+const requestLocationPermission = async () => {
+  try{
+    const response = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
+      title: "Location Permission",
+      message: "DSCVR needs access to your location " + "so it can function properly.",
+      buttonNeutral: "Ask Me Later",
+      buttonNegative: "Cancel",
+      buttonPositive: "OK"
+      }
+    )
+    if(response === PermissionsAndroid.RESULTS.GRANTED){
+      console.log("Location permission granted")
+    }
+    else{
+      console.log("Location permission denied")
+    }
+  }catch(err){
+    console.warn(err);
   }
 };
 
-const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-    height: "100%",
-  },
-
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  }
-}); 
+export default function App() {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName={"Home"}>
+          <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
+          <Stack.Screen name="New Entry" component={NewEntryScreen} options={{headerShown: false}}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+      
+    );
+};

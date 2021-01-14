@@ -81,6 +81,7 @@ project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
 ]
 
+//apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
 apply from: "../../node_modules/react-native/react.gradle"
 
 /**
@@ -181,7 +182,10 @@ android {
 }
 
 dependencies {
+    //implementation project(':react-native-community-geolocation')
     implementation project(':react-native-maps')
+    implementation project(':react-native-safe-area-context')
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

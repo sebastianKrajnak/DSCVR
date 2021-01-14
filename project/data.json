@@ -1,0 +1,34 @@
+{
+    "building" : [
+        {
+            "latitude" : 48.717666, 
+            "longitude" : 21.259207,
+            "name" : "Slovenská všeobecná poisťovňa",
+            "fucntion" : "Administratíva",
+            "address" : "Pribinova 2, Hlavná 4, Košice",
+            "architect" : "Skutecký Alexander",
+            "realization" : "1938 - 1939",
+            "info" : "Architekt mal v dobe navrhovania poisťovne dostatočné množstvo skúseností s komponovaním veľkých celkov a jej deväťpodlažný vežový objekt je toho brilantným dôkazom. Sebavedomo sa týči v nároží košického hlavného námestia, kde bol až do druhej polovice 20. storočia najvýraznejším moderným domom. Členitý objem graduje zo šiestich podlaží základnej hmoty na spomínaných deväť v nárožnej veži. Dvojpodlažný parter, obložený leštenými travertínovými platňami, sa do ulice otvára veľkými okennými otvormi a v kombinácii s dlhými lodžiami nižšieho krídla ozvláštňuje inak puristicky striedmu fasádu. Budova poisťovne sa radí k najlepším dielam A. Skuteckého." 
+        },
+       {
+            "latitude" : 48.717509, 
+            "longitude" : 21.258459,
+            "name" : "Obchodný dom Ignáca Rotha",
+            "function" : "Obchod a služby",
+            "address" : "Pribinova 6, Košice",
+            "architect" : "Oelschläger Ľudovít",
+            "realization" : "1938",
+            "info" : "Architekt dal tomuto vcelku jednoduchému radovému domu zvláštny charakter vďaka niekoľkým maličkostiam: horné okná sú o čosi menšie, v prevýšenom okne schodiska bol pôvodne v osi symetrie vysoký deliaci stĺpik, schodisko je vpredu zvláštne vložené a v hlavnom priestore je okolo oválneho otvoru galéria cez dve poschodia. Všetko sú to veľmi jemné prvky a neskoršie necitlivé zásahy niektoré z nich zničili. Na začiatku šesťdesiatych rokov zriadili na prízemí kanceláriu aerolínií a koncom roku 2000 prestavali objekt na pobočku Priemyselnej banky (E. Kupčiková, K. Gregor). Architektúra založená na pôsobení takých nepatrných nuáns sa tak dosť pozmenila, hoci jej základný tvar zostal."
+       },
+       {
+            "latitude" : 48.717037, 
+            "longitude" : 21.253744,
+            "name" : "Neologická synagóga neskôr Dom umenia",
+            "function" : "Sakrálna",
+            "address" : "Moyzesova 66, Košice",
+            "architect" : "Kozma Lajos",
+            "realization" : "1929",
+            "info" : "Výstavbe neologickej synagógy predchádzala medzinárodná súťaž, ktorej víťazom sa stal budapeštiansky architekt Lajos Kozma. Pôvodná budova synagógy bola koncentrovaná centrála s výraznou kupolou ukončenou cibuľovitou lucernou vo vrchole. Vnútorný priestor modlitebne založený na kruhovom pôdoryse má impozantné prevýšenie. Hlavný vstup do synagógy zvýrazňoval monumentálny štvorstĺpový portikus. V päťdesiatych rokoch, keď prestavali budovu na dom umenia, nahradili portikus ťažkopádnou hmotou vstupného vestibulu. Zvyšok budovy zachovali v jeho pôvodnom stvárnení. Súčasťou komplexu je aj židovská škola." 
+       }
+    ]
+}
