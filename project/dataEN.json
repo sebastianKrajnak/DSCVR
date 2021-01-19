@@ -1,0 +1,39 @@
+{
+    "buildings" : [
+        {   "id" : 1,
+            "latitude" : 48.717666, 
+            "longitude" : 21.259207,
+            "name" : "Slovak General Insurance Company",
+            "function" : "Administration",
+            "address" : "Pribinova 2, Hlavná 4, Košice",
+            "architect" : "Skutecký Alexander",
+            "realization" : "1938 - 1939",
+            "img" : "https://www.register-architektury.sk/storage/images/1660/responsive-images/813___media_library_original_1822_2432.jpg",
+            "description" : "At the time of the insurance company's design, the architect had a sufficient amount of experience in composing large units, and its nine-storey tower building is a brilliant proof of this. It confidently rises in the corner of Košice's main square, where it was the most distinctive modern house until the second half of the 20th century. The divided volume graduates from six floors of the basic material to the mentioned nine in the corner tower. The two-storey ground floor, lined with polished travertine plates, opens into the street through large window openings and, in combination with the long loggias of the lower wing, makes the otherwise puristically modest façade special. The insurance company's building is one of A. Skutecký's best works." 
+        },
+       {    
+            "id" : 2,
+            "latitude" : 48.717509, 
+            "longitude" : 21.258459,
+            "name" : "Ignác Roth department store",
+            "function" : "Sales and services",
+            "address" : "Pribinova 6, Košice",
+            "architect" : "Oelschläger Ľudovít",
+            "realization" : "1938",
+            "img" : "https://www.register-architektury.sk/storage/images/1794/responsive-images/944___media_library_original_390_491.jpg",
+            "description" : "The architect gave this rather simple terraced house a special character thanks to a few details: the upper windows are a bit smaller, in the elevated staircase window there was originally a high dividing column in the axis of symmetry, the staircase is strangely inserted at the front and in the main space there is a gallery over two floors. These are all very subtle elements and later insensitive interventions destroyed some of them. At the beginning of the 1960s, they set up an airline office on the ground floor and at the end of 2000 they rebuilt the building into a branch of Priemyselná banka (E. Kupčiková, K. Gregor). The architecture based on the action of such slight nuances has changed quite a bit, although its basic shape has remained."
+       },
+       {
+            "id" : 3,
+            "latitude" : 48.717037, 
+            "longitude" : 21.253744,
+            "name" : "Neological synagogue later Palace of arts",
+            "function" : "Sacral",
+            "address" : "Moyzesova 66, Košice",
+            "architect" : "Kozma Lajos",
+            "realization" : "1929",
+            "img" : "https://www.register-architektury.sk/storage/images/1697/responsive-images/846___media_library_original_1974_1784.jpg",
+            "description" : "The construction of the neological synagogue was preceded by an international competition, the winner of which was Budapest architect Lajos Kozma. The original building of the synagogue was a concentrated headquarters with a distinctive dome topped by an onion-shaped lantern at the top. The interior of the prayer room, based on a circular floor plan, has an impressive elevation. The main entrance to the synagogue was highlighted by a monumental four-column portico. In the 1950s, when they rebuilt the building into a house of art, they replaced the portico with the cumbersome mass of the entrance hall. The rest of the building has been preserved in its original design. The complex also includes a Jewish school." 
+       }
+    ]
+}
