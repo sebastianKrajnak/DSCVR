@@ -185,6 +185,7 @@ dependencies {
     implementation project(':@react-native-community_geolocation')
     implementation project(':react-native-maps')
     implementation project(':react-native-safe-area-context')
+    implementation project(':react-native-restart')
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion

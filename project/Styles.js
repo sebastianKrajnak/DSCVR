@@ -43,7 +43,7 @@ export default StyleSheet.create({
       position: 'absolute',
       height: 42,
       flexDirection: "row",
-      marginTop: '150%',
+      marginTop: '140%',
       marginLeft: '21%',
       marginRight: 21
     },

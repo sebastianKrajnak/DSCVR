@@ -5,15 +5,19 @@ import React from 'react';
 import { View, PermissionsAndroid, TouchableOpacity, Text, Image, TextInput, ScrollView, Alert } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import styles from "./Styles"
-import i18n from './i18n';
+import i18n, {changeLang} from './i18n';
 import MenuDrawer from 'react-native-side-drawer'
 import Geolocation from '@react-native-community/geolocation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import RNRestart from 'react-native-restart';
+
 
  //EN JSON hosted at https://jsonkeeper.com/b/CDFD
  //SK JSON hosted at https://jsonkeeper.com/b/VP53
 
  //DSCVR
  //Author: Sebastian Krajnak
+
 
  class HomeScreen extends React.Component {
   constructor(props) {
@@ -24,47 +28,31 @@ import Geolocation from '@react-native-community/geolocation';
       menuOpen: false,
       text: '',
       favourites: [],
-      isFavourite: false
+      isFavourite: false,
+      initialPosition: {
+        latitude: 0,
+        longitude: 0,
+        latitudeDelta: 0,
+        longitudeDelta: 0
+      }
     };
   }
 
   componentDidMount() { //fetch data for buildings from JSON
-    //console.log(i18n.language);
-    this.requestLocationPermission();
-    console.log('COMPONENT MOUNTED')
-    if(i18n.language === 'en'){
-      fetch('https://jsonkeeper.com/b/CDFD')
-        .then(res => res.json())
-        .then(data => {
-          this.setState({ buildings: data.buildings })
-        })
-        .catch(console.error)
-    }
-    else if(i18n.language === 'sk'){
-      fetch('https://jsonkeeper.com/b/VP53')
-        .then(res => res.json())
-        .then(data => {
-          this.setState({ buildings: data.buildings })
-        })
-        .catch(console.error)
-    }
+    this.requestLocationPermission()
 
-    this.watchID = Geolocation.watchPosition((position) => {
-      let newPos={
+    Geolocation.getCurrentPosition((position) => {
+      var initialRegion = {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude,
-        latitudeDelta: 0.0009,
-        longitudeDelta: 0.0010
-       }
-       
-       console.log('new pos:' + JSON.stringify(newPos))
-       this.mapRef.animateToRegion(newPos)
-    })
-  }
+        latitudeDelta: 0.0043, //0.0009
+        longitudeDelta: 0.0034 //0.0010
+      }
 
-  componentWillUnmount(){
-    console.log('COMPONENT UNMOUNTED')
-    Geolocation.clearWatch(this.watchID)
+      this.setState({initialPosition: initialRegion})
+    }, error => Alert.alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    )
   }
 
    mapMarkers = () => { //add a marker on the map for every entry found in the JSON file
@@ -95,6 +83,8 @@ import Geolocation from '@react-native-community/geolocation';
    toggleOpen = () =>{
      this.setState({menuOpen: !this.state.menuOpen});
    };
+   
+  
 
    drawerContent = () =>{
      return(
@@ -118,11 +108,11 @@ import Geolocation from '@react-native-community/geolocation';
 
           <Text style={styles.textEntryText}> {i18n.t('language')} </Text>
           <View style={{flexDirection: 'row', justifyContent: 'space-around', marginRight: 20}}>
-            <TouchableOpacity onPress={() => i18n.changeLanguage('sk')}>
+            <TouchableOpacity onPress={() => {changeLang('sk');  RNRestart.Restart();}}>
               <Image source={require('./assets/sk.png')} style={{marginLeft: 30}}/>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => i18n.changeLanguage('en')}>
+            <TouchableOpacity onPress={() => {changeLang('en');  RNRestart.Restart()}}>
               <Image source={require('./assets/gb.png')} />
             </TouchableOpacity>
           </View>
@@ -134,15 +124,16 @@ import Geolocation from '@react-native-community/geolocation';
    locateCurrentPosition = () => {
      Geolocation.getCurrentPosition(
        position =>{
-         console.log(JSON.stringify(position));
+         //console.log(JSON.stringify(position));
 
          let region={
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-          latitudeDelta: 0.0009,
-          longitudeDelta: 0.0010
+          latitudeDelta: 0.0043,
+          longitudeDelta: 0.0034
          }
 
+         //this.setState({initialPosition: region})
          this.mapRef.animateToRegion(region)
        },
        error => Alert.alert(error.message),
@@ -156,11 +147,31 @@ import Geolocation from '@react-native-community/geolocation';
        )
        if(response === PermissionsAndroid.RESULTS.GRANTED){
          console.log("Location permission granted");
-         this.locateCurrentPosition();
        }
        else{
-         console.log("Location permission denied")
+         console.log("Location permission denied");
+         this.requestLocationPermission();
        }
+
+      let language =  await AsyncStorage.getItem('language');
+      changeLang(language);
+
+      if(language === 'en'){
+        fetch('https://jsonkeeper.com/b/CDFD')
+          .then(res => res.json())
+          .then(data => {
+            this.setState({ buildings: data.buildings })
+          })
+          .catch(console.error)
+      }
+      else if(language === 'sk'){
+        fetch('https://jsonkeeper.com/b/VP53')
+          .then(res => res.json())
+          .then(data => {
+            this.setState({ buildings: data.buildings })
+          })
+          .catch(console.error)
+      }
      }catch(err){
        console.warn(err);
      }
@@ -172,13 +183,8 @@ import Geolocation from '@react-native-community/geolocation';
       <View style={styles.container}>
         <MenuDrawer open={this.state.menuOpen} drawerContent={this.drawerContent()} drawerPercentage={50} animationTime={250} overlay={true} opacity={0.4} position={'right'}>
           <MapView ref={map => this.mapRef = map} provider={PROVIDER_GOOGLE} style={styles.map} showsUserLocation={true} 
-            showsBuildings={false} showsPointsOfInterest={false} showsTraffic={false} onUserLocationChange={this.locateCurrentPosition()}
-            region={{
-              latitude:48.717776,
-              longitude: 21.259287,
-              latitudeDelta: 0.0009,
-              longitudeDelta: 0.0010
-            }}
+            
+            region={this.state.initialPosition} onUserLocationChange={() => this.locateCurrentPosition()}
           >
             {this.mapMarkers()}
           </MapView>
@@ -192,8 +198,8 @@ import Geolocation from '@react-native-community/geolocation';
             </TouchableOpacity>
           </View>
 
-          <View style={{position: 'absolute', marginTop: '135%', marginLeft: '83.5%'}}>
-            <TouchableOpacity style={styles.buttonLocation} onPress={() => this.requestLocationPermission()}>
+          <View style={{position: 'absolute', marginTop: '125%', marginLeft: '83.5%'}}>
+            <TouchableOpacity style={styles.buttonLocation} onPress={() => this.locateCurrentPosition()}>
               <Image source={require('./assets/position.png')} style={{width: 30, height: 30}}/>
             </TouchableOpacity>
           </View>
@@ -240,7 +246,10 @@ import Geolocation from '@react-native-community/geolocation';
             <TouchableOpacity style={styles.buttonCancel} onPress={ () => {this.props.navigation.goBack()} }>
               <Image style={{width: 55, height: 55}} source={require('./assets/cancel.png')}/>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonConfirm}>
+            <TouchableOpacity style={styles.buttonConfirm} onPress={ () => { 
+              /* here would be a magical function to send the new entry to database*/
+              this.props.navigation.navigate('ConfirmationScreen')} 
+            }>
               <Image style={{width: 55, height: 55}} source={require('./assets/confirm.png')}/>
             </TouchableOpacity>
           </View>
@@ -318,6 +327,26 @@ import Geolocation from '@react-native-community/geolocation';
    }
  }
 
+ class ConfirmationScreen extends React.Component{
+  render(){
+    return(
+      <View style={{flex: 1, backgroundColor: '#546A7B', justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{flex: 0.5, height: 40, margin: 15, marginRight: '80%'}}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
+            <Image source={require('./assets/back.png')} style={{transform: [{ rotate: '180deg' }]}}/>
+          </TouchableOpacity>
+        </View>
+        <View style={{flex: 5, justifyContent: 'center', alignItems: 'center', marginBottom: '20%'}}>
+          <Image source={require('./assets/check.png')} style={{width: 350, height: 350}}/>
+          <Text style={styles.textEntry}> {i18n.t('newEntry')} </Text>
+          <Text style={styles.textEntryText}> {i18n.t('admin')} </Text>
+        </View>
+      </View>
+    );
+  }
+}
+
+
 const Stack = createStackNavigator();
  
 export default class App extends React.Component {
@@ -329,6 +358,7 @@ export default class App extends React.Component {
           <Stack.Screen name="New Entry" component={NewEntryScreen} options={{headerShown: false}}/>
           <Stack.Screen name="Entry" component={EntryScreen} options={{headerShown: false}}/>
           <Stack.Screen name="FavList" component={FavList} options={{headerShown: false}}/>
+          <Stack.Screen name="ConfirmationScreen" component={ConfirmationScreen} options={{headerShown: false}}/>
         </Stack.Navigator>
       </NavigationContainer>      
     );

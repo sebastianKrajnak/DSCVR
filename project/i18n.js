@@ -1,5 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const resources = {
@@ -14,7 +15,9 @@ const resources = {
       "about": "About:",
       "language": "Choose app language",
       "favlist": "Favourites list",
-      "typeHere": "Type here..."
+      "typeHere": "Type here...",
+      "newEntry": "New entry succesfully created.",
+      "admin": "Awaiting admin approval..."
     }
   },
   sk: {
@@ -28,9 +31,16 @@ const resources = {
       "about": "O budove:",
       "language": "Vybrať jazyk aplikácie",
       "favlist": "Zoznam obľúbených",
-      "typeHere": "Píš tu..."
+      "typeHere": "Píšte sem...",
+      "newEntry": "Nový záznam úspešne vytvorený.",
+      "admin": "Čaká na schválenie adminsitrátorom..."
     }
   }
+};
+
+export const changeLang = async lang => {
+  i18n.changeLanguage(lang);
+  AsyncStorage.setItem('language', lang);
 };
 
 i18n
@@ -38,6 +48,7 @@ i18n
   .init({
     resources,
     lng: "en",
+    fallbackLng: "en",
 
     keySeparator: false, // we do not use keys in form messages.welcome
 
