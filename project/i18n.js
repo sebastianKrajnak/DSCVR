@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const resources = {
   en: {
     translation: {
-      "search": "Search...",
+      "search": "Search",
       "name": "Name:",
       "architect": "Architect:",
       "address": "Address:",
@@ -22,7 +22,7 @@ const resources = {
   },
   sk: {
     translation: {
-      "search": "Vyhľadávanie...",
+      "search": "Vyhľadávanie",
       "name": "Názov:",
       "architect": "Architekt:",
       "address": "Adresa:",

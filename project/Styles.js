@@ -94,7 +94,8 @@ export default StyleSheet.create({
       backgroundColor: "white",
       borderRadius: 100,
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      paddingTop: 2
     },
     
     rect: {
@@ -185,4 +186,10 @@ export default StyleSheet.create({
       borderRadius: 20,
       fontFamily: 'sen-regular'
     },
+
+    textSearchDesc: {
+      fontFamily: "sen-regular",
+      color: "white",
+      fontSize: 14,
+    }
   }); 
