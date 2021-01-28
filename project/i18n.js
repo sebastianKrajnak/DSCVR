@@ -17,7 +17,8 @@ const resources = {
       "favlist": "Favourites list",
       "typeHere": "Type here...",
       "newEntry": "New entry succesfully created.",
-      "admin": "Awaiting admin approval..."
+      "admin": "Awaiting admin approval...",
+      "list": "List of favourites"
     }
   },
   sk: {
@@ -33,7 +34,8 @@ const resources = {
       "favlist": "Zoznam obľúbených",
       "typeHere": "Píšte sem...",
       "newEntry": "Nový záznam úspešne vytvorený.",
-      "admin": "Čaká na schválenie adminsitrátorom..."
+      "admin": "Čaká na schválenie adminsitrátorom...",
+      "list": "Zoznam obľúbených"
     }
   }
 };

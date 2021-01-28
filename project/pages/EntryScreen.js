@@ -8,46 +8,56 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default class EntryScreen extends React.Component{
     constructor(props){
       super(props);
+      this.getData();
       this.state={
-        favourites: [],
-        isFavourite: false
+        favourites: []
       }
     }
 
-    componentDidMount(){
-      this.setState({favourites: AsyncStorage.getItem('favourites')})
+    getData = async () =>{  //checks and stores data about favourites from AsyncStorage
+      try{
+        const temp = await AsyncStorage.getItem('favourites')
+        const tempParsed = JSON.parse(temp)
+        
+        if(tempParsed !== null){
+          this.setState({favourites: tempParsed})
+          //console.log('start:' + this.state.favourites)
+        }
+      } catch(e){
+        console.log('ERROR: ' + e)
+      }
     }
 
-    toggleFavourite = ({itemID}) => {
-      let tempArray = this.state.favourites;
-      console.log(JSON.stringify(tempArray))
-      if(tempArray[itemID - 1] === true){
-        this.setState({isFavourite: false})
-        tempArray[itemID -1 ] = false;
-        this.setState({favourites: tempArray})
-        AsyncStorage.setItem('favourites', this.state.favourites)
-      }
+    toggleFavourite = async (itemID) => {
+      let tempArray = [];
+      tempArray = this.state.favourites
+      //console.log('TEMP: ' + tempArray)
 
-      else if(tempArray[itemID - 1] === false){
-        this.setState({isFavourite: true})
-        tempArray[itemID - 1] = true;
-        this.setState({favourites: tempArray})
-        AsyncStorage.setItem('favourites', this.state.favourites)
+      if(this.state.favourites[itemID] === true){
+        tempArray.splice(itemID, 1, false)
+        await this.setState({favourites: tempArray})
+        await AsyncStorage.setItem('favourites', JSON.stringify(this.state.favourites))
       }
-      else{
-        this.setState({isFavourite: true})
-        tempArray[itemID - 1] = true
-        this.setState({favourites: tempArray})
+      else if(tempArray[itemID] === false){
+        tempArray.splice(itemID, 1, true)
+        await this.setState({favourites: tempArray})
+        await AsyncStorage.setItem('favourites', JSON.stringify(this.state.favourites))
       }
+      else{   //gets called if it hasn't been decided yet, i.e default state is null, better known as false
+        tempArray.splice(itemID, 1, true)
+        await this.setState({favourites: tempArray})
+        await AsyncStorage.setItem('favourites', JSON.stringify(this.state.favourites))
+      }
+      //console.log('STATE: '+ this.state.favourites)
     }
  
-    favIcon = () => {
-     if(this.state.isFavourite){
-       return (<Image source={require('../assets/heartFull.png')} style={{width: 35, height:35}}/>)
-     }
-     else{
-       return (<Image source={require('../assets/heartEmpty.png')} style={{width: 35, height:35}}/>)
-     }
+    favIcon = (itemID) => {   //changes the icon displayed depending if the entry is in array of favourites or not
+      if(this.state.favourites[itemID] === true){
+        return (<Image source={require('../assets/heartFull.png')} style={{width: 35, height:35}}/>)
+      }
+      else{
+        return (<Image source={require('../assets/heartEmpty.png')} style={{width: 35, height:35}}/>)
+      }
     }
  
     render(){
@@ -67,7 +77,7 @@ export default class EntryScreen extends React.Component{
                <Text style={styles.name}>{name}</Text>
              </View>
              <TouchableOpacity style={styles.buttonFav} onPress={() => this.toggleFavourite(itemID)}>
-               {this.favIcon()}
+               {this.favIcon(itemID)}
              </TouchableOpacity>
            </View>
  

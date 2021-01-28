@@ -12,7 +12,7 @@ export default class NewEntryScreen extends React.Component{
  
            <View style={styles.imageAdd}>
              <TouchableOpacity>
-               <Image source={require('../assets/plus.png')}/>
+               <Image source={require('../assets/plus.png')} /* onPress={func to load image from gallery or camera and then prepare it for upload to database}*//>
              </TouchableOpacity>
            </View>
  

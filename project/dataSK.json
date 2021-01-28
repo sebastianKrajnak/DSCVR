@@ -1,6 +1,6 @@
 {
     "buildings" : [
-        {   "id" : 1,
+        {   "id" : 0,
             "latitude" : 48.717666, 
             "longitude" : 21.259207,
             "name" : "Slovenská všeobecná poisťovňa",
@@ -12,7 +12,7 @@
             "description" : "Architekt mal v dobe navrhovania poisťovne dostatočné množstvo skúseností s komponovaním veľkých celkov a jej deväťpodlažný vežový objekt je toho brilantným dôkazom. Sebavedomo sa týči v nároží košického hlavného námestia, kde bol až do druhej polovice 20. storočia najvýraznejším moderným domom. Členitý objem graduje zo šiestich podlaží základnej hmoty na spomínaných deväť v nárožnej veži. Dvojpodlažný parter, obložený leštenými travertínovými platňami, sa do ulice otvára veľkými okennými otvormi a v kombinácii s dlhými lodžiami nižšieho krídla ozvláštňuje inak puristicky striedmu fasádu. Budova poisťovne sa radí k najlepším dielam A. Skuteckého." 
         },
        {    
-            "id" : 2,
+            "id" : 1,
             "latitude" : 48.717509, 
             "longitude" : 21.258459,
             "name" : "Obchodný dom Ignáca Rotha",
@@ -24,7 +24,7 @@
             "description" : "Architekt dal tomuto vcelku jednoduchému radovému domu zvláštny charakter vďaka niekoľkým maličkostiam: horné okná sú o čosi menšie, v prevýšenom okne schodiska bol pôvodne v osi symetrie vysoký deliaci stĺpik, schodisko je vpredu zvláštne vložené a v hlavnom priestore je okolo oválneho otvoru galéria cez dve poschodia. Všetko sú to veľmi jemné prvky a neskoršie necitlivé zásahy niektoré z nich zničili. Na začiatku šesťdesiatych rokov zriadili na prízemí kanceláriu aerolínií a koncom roku 2000 prestavali objekt na pobočku Priemyselnej banky (E. Kupčiková, K. Gregor). Architektúra založená na pôsobení takých nepatrných nuáns sa tak dosť pozmenila, hoci jej základný tvar zostal."
        },
        {
-            "id" : 3,
+            "id" : 2,
             "latitude" : 48.717037, 
             "longitude" : 21.253744,
             "name" : "Neologická synagóga neskôr Dom umenia",

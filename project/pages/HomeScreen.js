@@ -9,6 +9,9 @@ import Geolocation from '@react-native-community/geolocation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNRestart from 'react-native-restart';
 
+// god why didn't I comment on what does what when I was writing it and now I have to comment everything after being done,
+// mental note, write comments while coding, not after you're finished idot
+
 export default class HomeScreen extends React.Component {
     constructor(props) {
       super(props);
@@ -17,7 +20,6 @@ export default class HomeScreen extends React.Component {
         buildings: [],
         menuOpen: false,
         language: '',
-        favourites: [],
         initialPosition: {
           latitude: 0,
           longitude: 0,
@@ -30,7 +32,7 @@ export default class HomeScreen extends React.Component {
     componentDidMount() { //fetch data for buildings from JSON
       this.requestLocationPermission()
       
-      Geolocation.getCurrentPosition((position) => {
+      Geolocation.getCurrentPosition((position) => {    //get's current device location and saves it into state for MapView to be able to use
         var initialRegion = {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -52,7 +54,7 @@ export default class HomeScreen extends React.Component {
         description={building.function}
         pinColor={'#884AB2'}
         onCalloutPress={() => { this.props.navigation.navigate('Entry', {
-            itemID: building.id - 1,  //I made the JSON around 2AM and started the ID from 1 not 0 and now i'm too lazy to reupload it okay ?
+            itemID: building.id,  
             name: building.name,
             func: building.function,
             address: building.address,
@@ -67,11 +69,11 @@ export default class HomeScreen extends React.Component {
        </Marker >)
      };
   
-     toggleOpen = () =>{
+     toggleOpen = () =>{    // self explanatory
        this.setState({menuOpen: !this.state.menuOpen});
      };
   
-     drawerContent = () =>{
+     drawerContent = () =>{   // creates the view for the side menu
        return(
          <View style={styles.animatedMenu}>
   
@@ -80,7 +82,7 @@ export default class HomeScreen extends React.Component {
           </TouchableOpacity>
   
           <View style={{marginTop: 20, height: '25%', justifyContent: 'space-between'}}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('FavList')}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('FavList', {language: this.state.language})}>
               <Text style={styles.textEntryText}> {i18n.t('favlist')} </Text>
             </TouchableOpacity>
   
@@ -136,12 +138,12 @@ export default class HomeScreen extends React.Component {
            this.requestLocationPermission();
          }
   
-        let language =  await AsyncStorage.getItem('language');
+        let language = await AsyncStorage.getItem('language');  // checks what language user selected, selected language gets stored in AsyncStorage for later use
         changeLang(language);
         this.setState({language: language})
   
         if(language === 'en'){
-          fetch('https://jsonkeeper.com/b/CDFD')
+          fetch('https://jsonkeeper.com/b/FGKR')
             .then(res => res.json())
             .then(data => {
               this.setState({ buildings: data.buildings })
@@ -149,7 +151,7 @@ export default class HomeScreen extends React.Component {
             .catch(console.error)
         }
         else if(language === 'sk'){
-          fetch('https://jsonkeeper.com/b/VP53')
+          fetch('https://jsonkeeper.com/b/NWIW')
             .then(res => res.json())
             .then(data => {
               this.setState({ buildings: data.buildings })

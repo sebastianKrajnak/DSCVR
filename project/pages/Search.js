@@ -1,5 +1,4 @@
 import 'react-native-gesture-handler';
-
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import styles from "../Styles"
@@ -15,12 +14,11 @@ export default class Search extends React.Component{
         buildings: [],
         arrayholder: []
       };
-      //this.arrayholder = [];
     }
 
-    componentDidMount(){
+    componentDidMount(){    //fetch data from JSON stored online
       if(this.props.route.params.language === 'en'){
-        fetch('https://jsonkeeper.com/b/CDFD')
+        fetch('https://jsonkeeper.com/b/FGKR')
           .then(res => res.json())
           .then(data => {
             this.setState({ buildings: data.buildings, arrayholder: data.buildings }
@@ -29,7 +27,7 @@ export default class Search extends React.Component{
         .catch(console.error)
       }
       else if(this.props.route.params.language === 'sk'){
-        fetch('https://jsonkeeper.com/b/VP53')
+        fetch('https://jsonkeeper.com/b/NWIW')
           .then(res => res.json())
           .then(data => {
             this.setState({ buildings: data.buildings, arrayholder: data.buildings }
@@ -39,7 +37,7 @@ export default class Search extends React.Component{
       }
     }
 
-    searchFilterFunction = (text) => {
+    searchFilterFunction = (text) => {    //searches the inputed text for names and updates the state of the buildings array accordingly so it displays the searched entry
       const newData = this.state.arrayholder.filter( function(item) {
         const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
         const textData = text.toUpperCase();
@@ -48,7 +46,7 @@ export default class Search extends React.Component{
       this.setState({buildings: newData, search: text});
     } 
 
-    ListViewItemSeparator = () =>{
+    ListViewItemSeparator = () =>{    //makes space between list items
       return ( <View style={{height: 10, width: '100%', backgroundColor: '#546A7B'}}/> );
     }
 

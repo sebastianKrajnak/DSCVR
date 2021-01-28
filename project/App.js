@@ -12,8 +12,8 @@ import ConfirmationScreen from './pages/ConfirmationScreen'
  //DSCVR
  //Author: Sebastian Krajnak
 
- //EN JSON hosted at https://jsonkeeper.com/b/CDFD
- //SK JSON hosted at https://jsonkeeper.com/b/VP53
+ //EN JSON hosted at https://jsonkeeper.com/b/FGKR
+ //SK JSON hosted at https://jsonkeeper.com/b/NWIW
 
 
 const Stack = createStackNavigator();
