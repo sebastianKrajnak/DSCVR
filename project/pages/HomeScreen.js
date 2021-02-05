@@ -9,6 +9,13 @@ import Geolocation from '@react-native-community/geolocation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNRestart from 'react-native-restart';
 
+const baseURL = 'https://parseapi.back4app.com/classes/Buildings';
+const headers = {
+  'X-Parse-Application-Id': 'dYLdXM6xTfFUzBXLOHIfiCelnaTMq31JjKnPpdpq',
+  'X-Parse-REST-API-Key': 'EhdHbWqYXvJ3YqlvsAOXEQHiafcfnF8J8XsSummG'
+}
+const baseSkURL = 'https://parseapi.back4app.com/classes/BuildingsSK';
+
 // god why didn't I comment on what does what when I was writing it and now I have to comment everything after being done,
 // mental note, write comments while coding, not after you're finished idot
 
@@ -25,7 +32,8 @@ export default class HomeScreen extends React.Component {
           longitude: 0,
           latitudeDelta: 0,
           longitudeDelta: 0
-        }
+        },
+        buildingIDs: []
       };
     }
   
@@ -48,13 +56,13 @@ export default class HomeScreen extends React.Component {
   
      mapMarkers = () => { //add a marker on the map for every entry found in the JSON file
        return this.state.buildings.map((building) => <Marker
-        key={building.id}
+        key={building.buildingID}
         coordinate={{ latitude: building.latitude, longitude: building.longitude }}
         title={building.name}
         description={building.function}
         pinColor={'#884AB2'}
         onCalloutPress={() => { this.props.navigation.navigate('Entry', {
-            itemID: building.id,  
+            itemID: building.buildingID,  
             name: building.name,
             func: building.function,
             address: building.address,
@@ -141,27 +149,33 @@ export default class HomeScreen extends React.Component {
         let language = await AsyncStorage.getItem('language');  // checks what language user selected, selected language gets stored in AsyncStorage for later use
         changeLang(language);
         this.setState({language: language})
-  
-        if(language === 'en'){
-          fetch('https://jsonkeeper.com/b/FGKR')
-            .then(res => res.json())
-            .then(data => {
-              this.setState({ buildings: data.buildings })
-            })
-            .catch(console.error)
-        }
-        else if(language === 'sk'){
-          fetch('https://jsonkeeper.com/b/NWIW')
-            .then(res => res.json())
-            .then(data => {
-              this.setState({ buildings: data.buildings })
-            })
-            .catch(console.error)
-        }
+        this.get(language);
+
        }catch(err){
          console.warn(err);
        }
      };
+     
+    async get(language) {
+      if(language === 'en'){
+        await fetch(baseURL, { headers })
+          .then(res => res.json())
+          .then(data => {
+            this.setState({buildings: data.results})
+          })
+          .catch(console.error)
+      }
+      else if(language === 'sk'){
+        await fetch(baseSkURL, { headers })
+          .then(res => res.json())
+          .then(data => {
+            this.setState({buildings: data.results})
+          })
+          .catch(console.error)
+      }
+      const buildingsMapped = this.state.buildings.map( (item) => item.buildingID)
+      this.setState({buildingIDs: buildingsMapped})
+    }
   
   
      render(){
@@ -175,7 +189,7 @@ export default class HomeScreen extends React.Component {
             </MapView>
   
             <View style={styles.buttonRow}>
-              <TouchableOpacity style={styles.buttonNewEntry} onPress={() => this.props.navigation.navigate('New Entry')}>
+              <TouchableOpacity style={styles.buttonNewEntry} onPress={() => this.props.navigation.navigate('New Entry', { IDs: this.state.buildingIDs, language: this.state.language})}>
                 <Text style={{fontSize: 40, color: 'white', fontFamily: 'Sen'}}>+</Text>
               </TouchableOpacity>
             </View>

@@ -17,8 +17,11 @@ const resources = {
       "favlist": "Favourites list",
       "typeHere": "Type here...",
       "newEntry": "New entry succesfully created.",
-      "admin": "Awaiting admin approval...",
-      "list": "List of favourites"
+      "reload": "Your entry will be displayed upon app reload...",
+      "list": "List of favourites",
+      "location" : "Pin location:",
+      "locatePos" : "Locate current position",
+      "posAlert" : "Position set."
     }
   },
   sk: {
@@ -34,8 +37,11 @@ const resources = {
       "favlist": "Zoznam obľúbených",
       "typeHere": "Píšte sem...",
       "newEntry": "Nový záznam úspešne vytvorený.",
-      "admin": "Čaká na schválenie adminsitrátorom...",
-      "list": "Zoznam obľúbených"
+      "reload": "Váš záznam sa zobrazí po reštarte aplikácie...",
+      "list": "Zoznam obľúbených",
+      "location" : "Poloha pinu:",
+      "locatePos" : "Nájdi aktuálnu pozíciu",
+      "posAlert" : "Pozícia uložená"
     }
   }
 };

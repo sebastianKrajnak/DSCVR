@@ -6,6 +6,12 @@ import { FlatList } from 'react-native-gesture-handler';
 import i18n from '../i18n';
 import styles from "../Styles"
 
+const baseURL = 'https://parseapi.back4app.com/classes/Buildings';
+const headers = {
+  'X-Parse-Application-Id': 'dYLdXM6xTfFUzBXLOHIfiCelnaTMq31JjKnPpdpq',
+  'X-Parse-REST-API-Key': 'EhdHbWqYXvJ3YqlvsAOXEQHiafcfnF8J8XsSummG'
+}
+const baseSkURL = 'https://parseapi.back4app.com/classes/BuildingsSK';
 
 export default class FavList extends React.Component{
   constructor(props){
@@ -21,22 +27,20 @@ export default class FavList extends React.Component{
 
   componentDidMount(){ //gets JSON buidling data
     if(this.props.route.params.language === 'en'){
-      fetch('https://jsonkeeper.com/b/FGKR')
+      fetch(baseURL, { headers })
         .then(res => res.json())
         .then(data => {
-          this.setState({ buildings: data.buildings, arrayholder: data.buildings}
-          )
+          this.setState({buildings: data.results, arrayholder: data.results})
         })
-      .catch(console.error)
+        .catch(console.error)
     }
     else if(this.props.route.params.language === 'sk'){
-      fetch('https://jsonkeeper.com/b/NWIW')
+      fetch(baseSkURL, { headers })
         .then(res => res.json())
         .then(data => {
-          this.setState({ buildings: data.buildings, arrayholder: data.buildings}
-          )
+          this.setState({buildings: data.results, arrayholder: data.results})
         })
-      .catch(console.error)
+        .catch(console.error)
     }
     this.checkFavouriteStatus();
   }
@@ -67,12 +71,12 @@ export default class FavList extends React.Component{
   }
 
   checkFavouriteStatus = async() => {
-    const buildingsMapped = this.state.buildings.map( (item) => item.id) //makes a new array of all building IDs
+    const buildingsMapped = this.state.buildings.map( (item) => item.buildingID) //makes a new array of all building IDs
     let matches = [];
     //console.log('mapped ' + buildingsMapped)
     
     for(let i = 0; i < this.state.favourites.length; i++){  //checks if the building ID matches with the ID in the index array of favourites i.e. is finds which bulding is not faved
-      let match = buildingsMapped.find(id => id===this.state.indexes[i])
+      let match = buildingsMapped.find(buildingID => buildingID===this.state.indexes[i])
       if(match !== undefined){
         matches.push(match) //if a match exists pushes it into array with stored matches
       }
@@ -87,14 +91,17 @@ export default class FavList extends React.Component{
   render(){
     return(
       <View style={{flex: 1, backgroundColor: '#546A7B', justifyContent: 'center', alignItems: 'center'}}>
+
         <View style={{ height: 50, width: '100%', padding: 10}}>
           <Text style={styles.textEntry}>{i18n.t('list')}</Text> 
         </View>
+
         <Button title={'Refresh'} onPress={() => this.checkFavouriteStatus()}/>
+
         <FlatList data={this.state.buildings} ItemSeparatorComponent={this.ListViewItemSeparator} renderItem={({item}) => (
           <View style={{borderColor: 'white', borderRadius: 25, borderWidth: 1, padding: 10, width: '100%'}}>
             <TouchableOpacity onPress={ () => { this.props.navigation.navigate('Entry', {
-              itemID: item.id, name: item.name, func: item.function, address: item.address, architect: item.architect,
+              itemID: item.buildingID, name: item.name, func: item.function, address: item.address, architect: item.architect,
               realization: item.realization, image: item.img, description: item.description } )
               }
             }>

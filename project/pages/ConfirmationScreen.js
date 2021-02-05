@@ -16,7 +16,7 @@ export default class ConfirmationScreen extends React.Component{
           <View style={{flex: 5, justifyContent: 'center', alignItems: 'center', marginBottom: '20%'}}>
             <Image source={require('../assets/check.png')} style={{width: 350, height: 350}}/>
             <Text style={styles.textEntry}> {i18n.t('newEntry')} </Text>
-            <Text style={styles.textEntryText}> {i18n.t('admin')} </Text>
+            <Text style={styles.textEntryText}> {i18n.t('reload')} </Text>
           </View>
         </View>
       );

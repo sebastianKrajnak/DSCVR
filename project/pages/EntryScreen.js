@@ -62,14 +62,13 @@ export default class EntryScreen extends React.Component{
  
     render(){
       const {itemID, name, description, architect, address, image, func, realization} =  this.props.route.params;
-      var encodedImage = encodeURI(image);
        
       return(
        <View style={styles.containerEntry}>
          <ScrollView style={{flex: 1}}>
  
            <View style={styles.image}>
-             <Image source={{uri: encodedImage}} style={{width: '100%', height: '100%'}}/>
+             <Image source={{uri: `data:image/jpg;base64,${image}`}} style={{width: '100%', height: '100%'}}/>
            </View>
  
            <View style={styles.rect}>

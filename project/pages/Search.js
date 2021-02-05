@@ -6,6 +6,13 @@ import i18n from '../i18n';
 import { SearchBar } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
 
+const baseURL = 'https://parseapi.back4app.com/classes/Buildings';
+const headers = {
+  'X-Parse-Application-Id': 'dYLdXM6xTfFUzBXLOHIfiCelnaTMq31JjKnPpdpq',
+  'X-Parse-REST-API-Key': 'EhdHbWqYXvJ3YqlvsAOXEQHiafcfnF8J8XsSummG'
+}
+const baseSkURL = 'https://parseapi.back4app.com/classes/BuildingsSK';
+
 export default class Search extends React.Component{
     constructor(props){
       super(props);
@@ -18,22 +25,20 @@ export default class Search extends React.Component{
 
     componentDidMount(){    //fetch data from JSON stored online
       if(this.props.route.params.language === 'en'){
-        fetch('https://jsonkeeper.com/b/FGKR')
+        fetch(baseURL, { headers })
           .then(res => res.json())
           .then(data => {
-            this.setState({ buildings: data.buildings, arrayholder: data.buildings }
-            )
+            this.setState({buildings: data.results, arrayholder: data.results})
           })
-        .catch(console.error)
+          .catch(console.error)
       }
       else if(this.props.route.params.language === 'sk'){
-        fetch('https://jsonkeeper.com/b/NWIW')
+        fetch(baseSkURL, { headers })
           .then(res => res.json())
           .then(data => {
-            this.setState({ buildings: data.buildings, arrayholder: data.buildings }
-            )
+            this.setState({buildings: data.results, arrayholder: data.results})
           })
-        .catch(console.error)
+          .catch(console.error)
       }
     }
 
@@ -60,7 +65,7 @@ export default class Search extends React.Component{
           <FlatList data={this.state.buildings} ItemSeparatorComponent={this.ListViewItemSeparator} renderItem={ ({item}) => (
             <View style={{borderColor: 'white', borderRadius: 25, borderWidth: 1, padding: 10, width: '100%'}}>
               <TouchableOpacity onPress={ () => { this.props.navigation.navigate('Entry', {
-                itemID: item.id, name: item.name, func: item.function, address: item.address, architect: item.architect,
+                itemID: item.buildingID, name: item.name, func: item.function, address: item.address, architect: item.architect,
                 realization: item.realization, image: item.img, description: item.description } )
                 }
               }>

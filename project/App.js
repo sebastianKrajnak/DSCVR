@@ -12,10 +12,6 @@ import ConfirmationScreen from './pages/ConfirmationScreen'
  //DSCVR
  //Author: Sebastian Krajnak
 
- //EN JSON hosted at https://jsonkeeper.com/b/FGKR
- //SK JSON hosted at https://jsonkeeper.com/b/NWIW
-
-
 const Stack = createStackNavigator();
  
 export default class App extends React.Component {

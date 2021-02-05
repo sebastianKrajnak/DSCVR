@@ -176,7 +176,8 @@ export default StyleSheet.create({
       borderColor: 'white',
       borderWidth: 1,
       borderRadius: 20,
-      fontFamily: 'sen-regular'
+      fontFamily: 'sen-regular',
+      color: 'white'
     },
     
     textInputDesc: {
@@ -184,12 +185,23 @@ export default StyleSheet.create({
       borderColor: 'white',
       borderWidth: 1,
       borderRadius: 20,
-      fontFamily: 'sen-regular'
+      fontFamily: 'sen-regular',
+      color: 'white'
     },
 
     textSearchDesc: {
       fontFamily: "sen-regular",
       color: "white",
       fontSize: 14,
+    },
+
+    locatePos: {
+      height: 40,
+      width: '60%',
+      borderColor: 'white',
+      borderWidth: 1,
+      borderRadius: 20,
+      justifyContent: 'center',
+      alignItems: 'center'
     }
   }); 
