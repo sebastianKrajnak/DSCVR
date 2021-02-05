@@ -21,7 +21,8 @@ const resources = {
       "list": "List of favourites",
       "location" : "Pin location:",
       "locatePos" : "Locate current position",
-      "posAlert" : "Position set."
+      "posAlert" : "Position set.",
+      "image" : "Image uploaded successfully"
     }
   },
   sk: {
@@ -41,7 +42,8 @@ const resources = {
       "list": "Zoznam obľúbených",
       "location" : "Poloha pinu:",
       "locatePos" : "Nájdi aktuálnu pozíciu",
-      "posAlert" : "Pozícia uložená"
+      "posAlert" : "Pozícia uložená",
+      "image" : "Obrázok úspešne uložený"
     }
   }
 };

@@ -44,6 +44,7 @@ export default class NewEntryScreen extends React.Component{
       },
         (response) => {
           this.setState({image: response.base64})
+          Alert.alert(i18n.t('image'))
         }
       )
     }
